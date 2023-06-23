@@ -12,3 +12,15 @@ Future<List<Game>> fetchGames() async {
     throw Exception('Failed to fetch games');
   }
 }
+
+Future<Game> fetchGameById(String gameId) async {
+  final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/games/' + gameId));
+  if (response.statusCode == 200) {
+    final jsonData = jsonDecode(response.body);
+    final game = Game.fromJson(jsonData); // Assuming you have a fromJson factory constructor in your Game class
+    print('Retrieved game: ${game.gameDateTime}');
+    return game;
+  } else {
+    throw Exception('Failed to fetch game');
+  }
+}

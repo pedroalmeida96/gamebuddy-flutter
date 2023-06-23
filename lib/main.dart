@@ -57,6 +57,7 @@ class _GameListScreenState extends State<GameListScreen> {
             final game = _games[index];
             return GestureDetector(
               onTap: () {
+                
                 Navigator.push(
                   context,
                   MaterialPageRoute(
