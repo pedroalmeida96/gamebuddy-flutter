@@ -9,10 +9,10 @@ class GameDetailsPage extends StatefulWidget {
   const GameDetailsPage({Key? key, required this.gameId}) : super(key: key);
 
   @override
-  _GameDetailsPageState createState() => _GameDetailsPageState();
+  GameDetailsPageState createState() => GameDetailsPageState();
 }
 
-class _GameDetailsPageState extends State<GameDetailsPage> {
+class GameDetailsPageState extends State<GameDetailsPage> {
   late Future<Game> _gameFuture;
 
   @override
@@ -24,7 +24,9 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FancyAppBar(title: 'Game Details'),
+      appBar: const FancyAppBar(
+        title: 'Game Details',
+      ),
       body: FutureBuilder<Game>(
         future: _gameFuture,
         builder: (context, snapshot) {
@@ -35,63 +37,63 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Game ID:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     game.gameId,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 16),
-                  Text(
+                  const SizedBox(height: 16),
+                  const Text(
                     'Game Type:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     game.gameType,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 16),
-                  Text(
+                  const SizedBox(height: 16),
+                  const Text(
                     'Location:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     game.location,
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
-                  SizedBox(height: 16),
-                  Text(
+                  const SizedBox(height: 16),
+                  const Text(
                     'Game DateTime:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     game.gameDateTime
                         .toString(), // Adjust the formatting as needed
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                   ),
                 ],
               ),
             );
           } else if (snapshot.hasError) {
-            return Center(
+            return const Center(
               child: Text(
                 'Failed to fetch game details',
                 style: TextStyle(
@@ -101,7 +103,7 @@ class _GameDetailsPageState extends State<GameDetailsPage> {
               ),
             );
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
