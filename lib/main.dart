@@ -7,10 +7,12 @@ import 'package:gamebuddy/widgets/FancyCard.dart';
 import 'game_details_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,12 +20,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: GameListScreen(),
+      home: const GameListScreen(),
     );
   }
 }
 
 class GameListScreen extends StatefulWidget {
+  const GameListScreen({super.key});
+
   @override
   _GameListScreenState createState() => _GameListScreenState();
 }
@@ -46,7 +50,7 @@ class _GameListScreenState extends State<GameListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: FancyAppBar(
+      appBar: const FancyAppBar(
         title: 'Game List',
       ),
       body: Padding(

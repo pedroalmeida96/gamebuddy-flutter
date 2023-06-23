@@ -36,7 +36,7 @@ class FancyCard extends StatelessWidget {
               const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           title: Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black87,
             ),
@@ -46,19 +46,19 @@ class FancyCard extends StatelessWidget {
             children: [
               Text(
                 'Game Type: $gameType',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black87,
                 ),
               ),
               Text(
                 'Location: $location',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black87,
                 ),
               ),
               Text(
                 'Game DateTime: $gameDateTime',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.black87,
                 ),
               ),
