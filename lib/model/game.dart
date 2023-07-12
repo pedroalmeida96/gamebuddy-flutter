@@ -19,4 +19,13 @@ class Game {
       gameDateTime: json['gameDateTime'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'gameId': gameId,
+      'gameType': gameType,
+      'location': location,
+      'gameDateTime': gameDateTime,
+    };
+  }
 }

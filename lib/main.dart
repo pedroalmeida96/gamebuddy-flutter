@@ -4,7 +4,9 @@ import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:gamebuddy/widgets/FancyCard.dart';
 
+import 'create_game.dart';
 import 'game_details_page.dart';
+import 'games_list.dart';
 
 void main() {
   runApp(const MyApp());
@@ -55,32 +57,23 @@ class _GameListScreenState extends State<GameListScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 0),
-        child: ListView.builder(
-          itemCount: _games.length,
-          itemBuilder: (context, index) {
-            final game = _games[index];
-            return GestureDetector(
-              onTap: () {
-                
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GameDetailsPage(
-                      gameId: game.gameId,
-                    ),
-                  ),
-                );
-              },
-              child: FancyCard(
-                title: 'Game ID: ${game.gameId}',
-                gameType: game.gameType,
-                location: game.location,
-                gameDateTime: game.gameDateTime,
-              ),
-            );
-          },
-        ),
+        child: GamesList(games: _games),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _handleAddGame,
+        child: Icon(Icons.add),
+        backgroundColor: Colors.blue,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
+
+  void _handleAddGame() {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => CreateGamePage(),
+    ),
+  );
+}
 }
