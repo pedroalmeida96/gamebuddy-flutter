@@ -1,7 +1,14 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:uuid/uuid.dart';
 import '../model/game.dart';
 import 'http/http.dart';
+import 'http/usershttp.dart';
+import 'model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {
   @override
@@ -11,18 +18,49 @@ class CreateGamePage extends StatefulWidget {
 class _CreateGamePageState extends State<CreateGamePage> {
   final TextEditingController _gameTypeController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
-  final TextEditingController _gameDateTimeController = TextEditingController();
+  DateTime _selectedDateTime = DateTime.now();
+  List<AppUser> _users = [];
+  AppUser? _selectedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUsers().then((users) {
+      setState(() {
+        _users = users;
+      });
+    }).catchError((error) {
+      print('Failed to fetch users: $error');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const FancyAppBar(
-        title: 'Create game',
+        title: 'Create Game',
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            DropdownButtonFormField<AppUser>(
+              value: _selectedUser,
+              items: _users.map((user) {
+                return DropdownMenuItem<AppUser>(
+                  value: user,
+                  child: Text(user.name),
+                );
+              }).toList(),
+              onChanged: (user) {
+                setState(() {
+                  _selectedUser = user;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Select User',
+              ),
+            ),
             TextField(
               controller: _gameTypeController,
               decoration: const InputDecoration(
@@ -35,10 +73,16 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 labelText: 'Location',
               ),
             ),
-            TextField(
-              controller: _gameDateTimeController,
-              decoration: const InputDecoration(
-                labelText: 'Game Date Time',
+            SizedBox(
+              height: 125,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.dateAndTime,
+                initialDateTime: _selectedDateTime,
+                onDateTimeChanged: (DateTime newDateTime) {
+                  setState(() {
+                    _selectedDateTime = newDateTime;
+                  });
+                },
               ),
             ),
             const SizedBox(height: 16.0),
@@ -53,19 +97,35 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _handleAddGame() async {
+    final uuid = Uuid();
+    final String generatedUuid = uuid.v4(); // Generate a version 4 UUID
+    final gameId = generatedUuid.substring(0, 8);
     final game = Game(
-      gameId: '',
+      gameId: gameId,
       gameType: _gameTypeController.text,
       location: _locationController.text,
-      gameDateTime: _gameDateTimeController.text,
+      gameDateTime: _selectedDateTime.toString(),
+      participants: [_selectedUser!],
     );
+
+    print('Sending JSON: ${json.encode(game.toJson())}');
 
     try {
       final createdGame = await createGame(game);
-      print('New game created successfully: ${createdGame.gameId}');
+      Fluttertoast.showToast(
+        msg: 'New game created successfully: ${createdGame.gameId}',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
       // Do any necessary navigation or further actions after game creation
     } catch (error) {
-      print('Error creating a game: $error');
+      Fluttertoast.showToast(
+        msg: 'Error creating a game: $error',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
       // Handle error condition appropriately
     }
   }
@@ -74,7 +134,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
   void dispose() {
     _gameTypeController.dispose();
     _locationController.dispose();
-    _gameDateTimeController.dispose();
     super.dispose();
   }
 }
