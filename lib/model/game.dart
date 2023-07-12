@@ -1,14 +1,18 @@
+import 'appuser.dart';
+
 class Game {
   final String gameId;
   final String gameType;
   final String location;
   final String gameDateTime;
+  final List<AppUser> participants;
 
   Game({
     required this.gameId,
     required this.gameType,
     required this.location,
     required this.gameDateTime,
+    required this.participants
   });
 
   factory Game.fromJson(Map<String, dynamic> json) {
@@ -17,6 +21,19 @@ class Game {
       gameType: json['gameType'],
       location: json['location'],
       gameDateTime: json['gameDateTime'],
+      participants: (json['participants'] as List<dynamic>)
+          .map((participantJson) => AppUser.fromJson(participantJson))
+          .toList(),
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'gameId': gameId,
+      'gameType': gameType,
+      'location': location,
+      'gameDateTime': gameDateTime,
+      'participants': participants.map((participant) => participant.toJson()).toList(),
+    };
   }
 }
