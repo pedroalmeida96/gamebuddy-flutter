@@ -39,7 +39,7 @@ Future<Game> createGame(Game game) async {
       headers: {'Content-Type': 'application/json'},
     );
 
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final createdGame = Game.fromJson(json.decode(response.body));
       return createdGame;
     } else {

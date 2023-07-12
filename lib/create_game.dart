@@ -1,13 +1,13 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../model/game.dart';
-import 'http/http.dart';
 import 'http/usershttp.dart';
+import 'main.dart';
 import 'model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {
@@ -104,19 +104,23 @@ class _CreateGamePageState extends State<CreateGamePage> {
       gameId: gameId,
       gameType: _gameTypeController.text,
       location: _locationController.text,
-      gameDateTime: _selectedDateTime.toString(),
+      gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+          .format(_selectedDateTime)
+          .toString(),
       participants: [_selectedUser!],
     );
 
-    print('Sending JSON: ${json.encode(game.toJson())}');
-
     try {
-      final createdGame = await createGame(game);
+      final create = createGame(game);
       Fluttertoast.showToast(
-        msg: 'New game created successfully: ${createdGame.gameId}',
+        msg: 'New game created successfully',
         toastLength: Toast.LENGTH_SHORT,
         backgroundColor: Colors.green,
         textColor: Colors.white,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const GameListScreen()),
       );
       // Do any necessary navigation or further actions after game creation
     } catch (error) {

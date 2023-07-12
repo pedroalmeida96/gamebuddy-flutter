@@ -11,6 +11,12 @@ class GamesList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (games.isEmpty) {
+      return Center(
+        child: Text('No games available'),
+      );
+    }
+
     return ListView.builder(
       itemCount: games.length,
       itemBuilder: (context, index) {
