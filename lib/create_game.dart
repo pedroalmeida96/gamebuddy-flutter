@@ -6,6 +6,7 @@ import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../model/game.dart';
+import 'games_list.dart';
 import 'http/usershttp.dart';
 import 'main.dart';
 import 'model/appuser.dart';
