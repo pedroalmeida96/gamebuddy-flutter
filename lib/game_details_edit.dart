@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/game_details_edit.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 
-class GameDetailsPage extends StatefulWidget {
+class GameDetailsEditPage extends StatefulWidget {
   final String gameId;
 
-  const GameDetailsPage({Key? key, required this.gameId}) : super(key: key);
+  const GameDetailsEditPage({Key? key, required this.gameId}) : super(key: key);
 
   @override
-  GameDetailsPageState createState() => GameDetailsPageState();
+  GameDetailsEditPageState createState() => GameDetailsEditPageState();
 }
 
-class GameDetailsPageState extends State<GameDetailsPage> {
+class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late Future<Game> _gameFuture;
 
   @override
@@ -90,26 +89,19 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                         .toString(), // Adjust the formatting as needed
                     style: const TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(height: 4),
                   Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16, bottom: 16),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GameDetailsEditPage(gameId: game.gameId),
-                            ),
-                          );
-                        },
-                        child: const Text('Edit Game Details'),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16, bottom: 16),
+                        child: ElevatedButton.icon(
+                          icon: const Icon(Icons.save, size: 18),
+                          label: const Text(''),
+                          onPressed: () {},
+                        ),
                       ),
                     ),
-                  ),
-                )
+                  )
                 ],
               ),
             );
@@ -127,15 +119,6 @@ class GameDetailsPageState extends State<GameDetailsPage> {
             return const Center(child: CircularProgressIndicator());
           }
         },
-      ),
-    );
-  }
-
-  void _handleEditGame(gameId) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => GameDetailsEditPage(gameId: gameId,),
       ),
     );
   }
