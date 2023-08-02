@@ -5,6 +5,7 @@ import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 
+import 'game_details_page.dart';
 import 'model/appuser.dart';
 
 class GameDetailsEditPage extends StatefulWidget {
@@ -185,7 +186,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     );
   }
 
-  void _handleEditGame(String gameId) {
+  Future<void> _handleEditGame(String gameId) async {
     // Extract the edited data from the text controllers
     final String editedGameType = _gameTypeController.text;
     final String editedLocation = _locationController.text;
@@ -196,17 +197,25 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         gameType: editedGameType,
         location: editedLocation,
         gameDateTime: editedGameDateTime,
-        participants: []);
+        participants: _selectedUser != null ? [_selectedUser!] : []);
 
     print(updatedGame.toString());
 
     try {
-      final update = updateGame(updatedGame);
+      final updatedGameResult = await updateGame(updatedGame);
       Fluttertoast.showToast(
-        msg: 'New game created successfully',
+        msg: 'Game updated successfully',
         toastLength: Toast.LENGTH_SHORT,
         backgroundColor: Colors.green,
         textColor: Colors.white,
+      );
+
+      Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                GameDetailsPage(gameId: updatedGameResult.gameId)),
       );
     } catch (error) {
       Fluttertoast.showToast(
@@ -216,6 +225,5 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         textColor: Colors.white,
       );
     }
-    Navigator.pop(context);
   }
 }
