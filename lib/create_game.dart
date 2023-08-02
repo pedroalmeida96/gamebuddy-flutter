@@ -7,8 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../model/game.dart';
 import 'games_list.dart';
-import 'http/usershttp.dart';
-import 'main.dart';
 import 'model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {
@@ -99,7 +97,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   void _handleAddGame() async {
     final uuid = Uuid();
-    final String generatedUuid = uuid.v4(); // Generate a version 4 UUID
+    final String generatedUuid = uuid.v4();
     final gameId = generatedUuid.substring(0, 8);
     final game = Game(
       gameId: gameId,
