@@ -22,7 +22,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late TextEditingController _gameTypeController;
   late TextEditingController _locationController;
   late TextEditingController _gameDateTimeController;
-  List<AppUser> _users = [];
   AppUser? _selectedUser;
 
   @override

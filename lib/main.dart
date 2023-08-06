@@ -1,11 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/http/http.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
-import 'package:gamebuddy/widgets/FancyCard.dart';
-
-import 'create_game.dart';
-import 'game_details_page.dart';
 import 'games_list.dart';
 
 void main() {
