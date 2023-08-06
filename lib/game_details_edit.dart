@@ -69,8 +69,9 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
             _gameDateTimeController.text = game.gameDateTime.toString();
             _existingParticipants = game.participants;
             _existingParticipants.forEach((user) {
-              print(user.name);
+              print("Initial users ${user.name}");
             });
+
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -202,7 +203,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   }
 
   Future<void> _handleEditGame(String gameId) async {
-    // Extract the edited data from the text controllers
     final String editedGameType = _gameTypeController.text;
     final String editedLocation = _locationController.text;
     final String editedGameDateTime = _gameDateTimeController.text;
@@ -212,7 +212,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         gameType: editedGameType,
         location: editedLocation,
         gameDateTime: editedGameDateTime,
-        participants: _selectedUser != null ? [_selectedUser!] : []);
+        participants: _selectedParticipants);
 
     print(updatedGame.toString());
 
