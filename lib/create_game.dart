@@ -110,18 +110,20 @@ class _CreateGamePageState extends State<CreateGamePage> {
     );
 
     try {
-      final create = createGame(game);
+      await createGame(game);
       Fluttertoast.showToast(
         msg: 'New game created successfully',
         toastLength: Toast.LENGTH_SHORT,
         backgroundColor: Colors.green,
         textColor: Colors.white,
       );
+
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const GameListScreen()),
+        MaterialPageRoute(
+          builder: (context) => const GameListScreen(),
+        ),
       );
-      // Do any necessary navigation or further actions after game creation
     } catch (error) {
       Fluttertoast.showToast(
         msg: 'Error creating a game: $error',

@@ -60,6 +60,7 @@ class _GameListScreenState extends State<GameListScreen> {
                 location: game.location,
                 gameDateTime: game.gameDateTime,
                 onEdit: () {
+                  print("edit");
                   _handleEditGame(game.gameId);
                 },
                 onDelete: () {
