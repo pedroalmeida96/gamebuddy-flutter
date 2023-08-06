@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -216,13 +216,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
 
     try {
       final updatedGameResult = await updateGame(updatedGame);
-      Fluttertoast.showToast(
-        msg: 'Game updated successfully',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
-
+      showSuccessToast("Game updated successfully");
       Navigator.pop(context);
       Navigator.push(
         context,
@@ -231,12 +225,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                 GameDetailsPage(gameId: updatedGameResult.gameId)),
       );
     } catch (error) {
-      Fluttertoast.showToast(
-        msg: 'Error creating a game: $error',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast("Error creating a game: $error");
     }
   }
 }

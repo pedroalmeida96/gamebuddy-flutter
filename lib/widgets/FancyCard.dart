@@ -48,22 +48,64 @@ class FancyCard extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Game Type: $gameType',
-                style: const TextStyle(
-                  color: Colors.black87,
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: [
+                    const TextSpan(
+                      text: 'Game Type: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, // Make it bold
+                        color: Colors.black87,
+                      ),
+                    ),
+                    TextSpan(
+                      text: gameType, // This will not be bold
+                      style: const TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                'Location: $location',
-                style: const TextStyle(
-                  color: Colors.black87,
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: [
+                    const TextSpan(
+                      text: 'Location: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, // Make it bold
+                        color: Colors.black87,
+                      ),
+                    ),
+                    TextSpan(
+                      text: location, // This will not be bold
+                      style: const TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Text(
-                'Game DateTime: $gameDateTime',
-                style: const TextStyle(
-                  color: Colors.black87,
+              RichText(
+                text: TextSpan(
+                  style: DefaultTextStyle.of(context).style,
+                  children: [
+                    const TextSpan(
+                      text: 'Game DateTime: ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold, // Make it bold
+                        color: Colors.black87,
+                      ),
+                    ),
+                    TextSpan(
+                      text: gameDateTime, // This will not be bold
+                      style: const TextStyle(
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:gamebuddy/widgets/FancyCard.dart';
+import 'package:gamebuddy/widgets/toast_utils.dart';
 
 import 'create_game.dart';
 import 'game_details_edit.dart';
@@ -101,23 +101,13 @@ class _GameListScreenState extends State<GameListScreen> {
   Future<void> _handleDeleteGame(String gameId) async {
     try {
       await deleteGame(gameId);
-      Fluttertoast.showToast(
-        msg: 'Game deleted successfully',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
+      showSuccessToast('Game deleted successfully');
       setState(() {
         // Remove the deleted game from the list of games
         _games.removeWhere((game) => game.gameId == gameId);
       });
     } catch (error) {
-      Fluttertoast.showToast(
-        msg: 'Error deleting the game: $error',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
+      showErrorToast('Error deleting the game: $error');
     }
   }
 }

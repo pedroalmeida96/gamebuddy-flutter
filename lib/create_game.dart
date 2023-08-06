@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import '../model/game.dart';
@@ -111,13 +111,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
     try {
       await createGame(game);
-      Fluttertoast.showToast(
-        msg: 'New game created successfully',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
-
+      showSuccessToast('New game created successfully');
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -125,13 +119,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
         ),
       );
     } catch (error) {
-      Fluttertoast.showToast(
-        msg: 'Error creating a game: $error',
-        toastLength: Toast.LENGTH_SHORT,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-      );
-      // Handle error condition appropriately
+      showErrorToast('Error creating a game: $error');
     }
   }
 
