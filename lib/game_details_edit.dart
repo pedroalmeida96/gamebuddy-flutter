@@ -23,6 +23,8 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late TextEditingController _locationController;
   late TextEditingController _gameDateTimeController;
   AppUser? _selectedUser;
+  List<AppUser> _users = [];
+  List<AppUser> _existingParticipants = [];
 
   @override
   void initState() {
@@ -31,6 +33,13 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     _gameTypeController = TextEditingController();
     _locationController = TextEditingController();
     _gameDateTimeController = TextEditingController();
+    fetchUsers().then((users) {
+      setState(() {
+        _users = users;
+      });
+    }).catchError((error) {
+      print('Failed to fetch users: $error');
+    });
   }
 
   @override
@@ -55,7 +64,10 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
             _gameTypeController.text = game.gameType;
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
-
+            _existingParticipants = game.participants;
+            _existingParticipants.forEach((user) {
+              print(user.name);
+            });
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -74,20 +86,22 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     game.gameId, // Display the Game ID as text
                     style: const TextStyle(fontSize: 16),
                   ),
+                  const SizedBox(height: 16),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'Participants:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
                   const SizedBox(height: 4),
                   DropdownButtonFormField<AppUser>(
-                    value: _selectedUser,
-                    items: game.participants.map((user) {
-                      return DropdownMenuItem<AppUser>(
-                        value: user,
-                        child: Text(user.name),
-                      );
-                    }).toList(),
-                    onChanged: (user) {
-                      setState(() {
-                        _selectedUser = user;
-                      });
-                    },
+                    value: _existingParticipants.isNotEmpty
+                        ? _existingParticipants.first
+                        : null,
+                    items: _buildDropdownItems(),
+                    onChanged: (user) {},
                     decoration: const InputDecoration(
                       labelText: 'Select User',
                     ),
@@ -224,5 +238,25 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         textColor: Colors.white,
       );
     }
+  }
+
+  List<DropdownMenuItem<AppUser>> _buildDropdownItems() {
+    return [
+      ..._existingParticipants.map(
+        (user) => DropdownMenuItem<AppUser>(
+          value: user,
+          child: Text(
+            user.name,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+      ..._users.map(
+        (user) => DropdownMenuItem<AppUser>(
+          value: user,
+          child: Text(user.name),
+        ),
+      ),
+    ];
   }
 }
