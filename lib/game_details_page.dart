@@ -78,6 +78,26 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                   ),
                   const SizedBox(height: 16),
                   const Text(
+                    'Participants:',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: game.participants.length,
+                    itemBuilder: (context, index) {
+                      final participant = game.participants[index];
+                      return Text(
+                        participant.name,
+                        style: const TextStyle(fontSize: 16),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
                     'Game DateTime:',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -92,24 +112,25 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                   ),
                   const SizedBox(height: 4),
                   Expanded(
-                  child: Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16, bottom: 16),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => GameDetailsEditPage(gameId: game.gameId),
-                            ),
-                          );
-                        },
-                        child: const Text('Edit Game Details'),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16, bottom: 16),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    GameDetailsEditPage(gameId: game.gameId),
+                              ),
+                            );
+                          },
+                          child: const Text('Edit Game Details'),
+                        ),
                       ),
                     ),
-                  ),
-                )
+                  )
                 ],
               ),
             );
@@ -135,7 +156,9 @@ class GameDetailsPageState extends State<GameDetailsPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => GameDetailsEditPage(gameId: gameId,),
+        builder: (context) => GameDetailsEditPage(
+          gameId: gameId,
+        ),
       ),
     );
   }
