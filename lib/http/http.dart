@@ -73,6 +73,20 @@ Future<Game> updateGame(Game game) async {
   }
 }
 
+Future<void> deleteGame(String gameId) async {
+  final url = Uri.parse('http://10.0.2.2:8080/api/games/delete/$gameId');
+  try {
+    final response = await http.delete(url);
+    if (response.statusCode == 200) {
+      print('Game deleted successfully');
+    } else {
+      print('Failed to delete game');
+    }
+  } catch (error) {
+    print('Error deleting game: $error');
+  }
+}
+
 Future<List<AppUser>> fetchUsers() async {
   final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/users'));
   if (response.statusCode == 200) {

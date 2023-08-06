@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:gamebuddy/widgets/FancyCard.dart';
 
 import 'create_game.dart';
+import 'game_details_edit.dart';
 import 'game_details_page.dart';
 import 'http/http.dart';
 
@@ -57,8 +59,12 @@ class _GameListScreenState extends State<GameListScreen> {
                 gameType: game.gameType,
                 location: game.location,
                 gameDateTime: game.gameDateTime,
-                onEdit: () {},
-                onDelete: () {},
+                onEdit: () {
+                  _handleEditGame(game.gameId);
+                },
+                onDelete: () {
+                  _handleDeleteGame(game.gameId);
+                },
               ),
             );
           },
@@ -80,5 +86,37 @@ class _GameListScreenState extends State<GameListScreen> {
         builder: (context) => CreateGamePage(),
       ),
     );
+  }
+
+  void _handleEditGame(String gameId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => GameDetailsEditPage(gameId: gameId),
+      ),
+    );
+  }
+
+  Future<void> _handleDeleteGame(String gameId) async {
+    try {
+      await deleteGame(gameId);
+      Fluttertoast.showToast(
+        msg: 'Game deleted successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
+      setState(() {
+        // Remove the deleted game from the list of games
+        _games.removeWhere((game) => game.gameId == gameId);
+      });
+    } catch (error) {
+      Fluttertoast.showToast(
+        msg: 'Error deleting the game: $error',
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
+    }
   }
 }
