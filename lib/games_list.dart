@@ -57,6 +57,8 @@ class _GameListScreenState extends State<GameListScreen> {
                 gameType: game.gameType,
                 location: game.location,
                 gameDateTime: game.gameDateTime,
+                onEdit: () {},
+                onDelete: () {},
               ),
             );
           },

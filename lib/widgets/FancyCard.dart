@@ -5,6 +5,8 @@ class FancyCard extends StatelessWidget {
   final String gameType;
   final String location;
   final String gameDateTime;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
 
   const FancyCard({
     Key? key,
@@ -12,6 +14,8 @@ class FancyCard extends StatelessWidget {
     required this.gameType,
     required this.location,
     required this.gameDateTime,
+    required this.onEdit,
+    required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -61,6 +65,21 @@ class FancyCard extends StatelessWidget {
                 style: const TextStyle(
                   color: Colors.black87,
                 ),
+              ),
+            ],
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              IconButton(
+                onPressed: onEdit,
+                icon: Icon(Icons.edit),
+                tooltip: 'Edit',
+              ),
+              IconButton(
+                onPressed: onDelete,
+                icon: Icon(Icons.delete),
+                tooltip: 'Delete',
               ),
             ],
           ),
