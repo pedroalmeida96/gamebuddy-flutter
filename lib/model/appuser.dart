@@ -24,4 +24,9 @@ class AppUser {
 
   @override
   int get hashCode => userId.hashCode;
+
+  @override
+  String toString() {
+    return 'AppUser: {userId: $userId, name: $name}';
+  }
 }

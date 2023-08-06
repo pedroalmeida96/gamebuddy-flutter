@@ -24,9 +24,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late TextEditingController _gameTypeController;
   late TextEditingController _locationController;
   late TextEditingController _gameDateTimeController;
-  AppUser? _selectedUser;
   List<AppUser> _users = [];
-  List<AppUser> _existingParticipants = [];
   List<AppUser> _selectedParticipants = [];
 
   @override
@@ -67,8 +65,8 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
             _gameTypeController.text = game.gameType;
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
-            _existingParticipants = game.participants;
-            _existingParticipants.forEach((user) {
+            _selectedParticipants = game.participants;
+            _selectedParticipants.forEach((user) {
               print("Initial users ${user.name}");
             });
 
@@ -87,7 +85,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    game.gameId, // Display the Game ID as text
+                    game.gameId,
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -100,12 +98,13 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                   ),
                   const SizedBox(height: 4),
                   MultiSelectDialogField<AppUser>(
-                    initialValue: _existingParticipants,
+                    initialValue: _selectedParticipants,
                     items: _users
                         .map(
                             (user) => MultiSelectItem<AppUser>(user, user.name))
                         .toList(),
                     onConfirm: (values) {
+                      print("values POA: ${values}");
                       _selectedParticipants = values;
                     },
                   ),
@@ -156,12 +155,11 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     height: 125,
                     child: CupertinoDatePicker(
                       mode: CupertinoDatePickerMode.dateAndTime,
-                      initialDateTime: DateTime.parse(_gameDateTimeController
-                          .text), // Use the _gameDateTimeController to initialize
+                      initialDateTime:
+                          DateTime.parse(_gameDateTimeController.text),
                       onDateTimeChanged: (DateTime newDateTime) {
                         setState(() {
-                          _gameDateTimeController.text = newDateTime
-                              .toString(); // Update the _gameDateTimeController
+                          _gameDateTimeController.text = newDateTime.toString();
                         });
                       },
                     ),
@@ -176,8 +174,8 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                             onPressed: () {
                               _handleEditGame(game.gameId);
                             },
-                            icon: Icon(Icons.save), // Display the save icon
-                            label: const Text(''), // Empty text
+                            icon: Icon(Icons.save),
+                            label: const Text(''),
                           )),
                     ),
                   ),
@@ -214,7 +212,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         gameDateTime: editedGameDateTime,
         participants: _selectedParticipants);
 
-    print(updatedGame.toString());
+    print('UPDATE $updatedGame');
 
     try {
       final updatedGameResult = await updateGame(updatedGame);
@@ -240,21 +238,5 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         textColor: Colors.white,
       );
     }
-  }
-
-  List<DropdownMenuItem<AppUser>> _buildDropdownItems() {
-    return _users
-        .map(
-          (user) => DropdownMenuItem<AppUser>(
-            value: user,
-            child: Text(
-              user.name,
-              style: _existingParticipants.contains(user)
-                  ? const TextStyle(fontWeight: FontWeight.bold)
-                  : null,
-            ),
-          ),
-        )
-        .toList();
   }
 }
