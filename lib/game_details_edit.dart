@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import 'game_details_page.dart';
 import 'model/appuser.dart';
@@ -25,6 +27,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   AppUser? _selectedUser;
   List<AppUser> _users = [];
   List<AppUser> _existingParticipants = [];
+  List<AppUser> _selectedParticipants = [];
 
   @override
   void initState() {
@@ -87,7 +90,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
-                  const SizedBox(height: 16),
                   const Text(
                     'Participants:',
                     style: TextStyle(
@@ -96,15 +98,15 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  DropdownButtonFormField<AppUser>(
-                    value: _existingParticipants.isNotEmpty
-                        ? _existingParticipants.first
-                        : null,
-                    items: _buildDropdownItems(),
-                    onChanged: (user) {},
-                    decoration: const InputDecoration(
-                      labelText: 'Select User',
-                    ),
+                  MultiSelectDialogField<AppUser>(
+                    initialValue: _existingParticipants,
+                    items: _users
+                        .map(
+                            (user) => MultiSelectItem<AppUser>(user, user.name))
+                        .toList(),
+                    onConfirm: (values) {
+                      _selectedParticipants = values;
+                    },
                   ),
                   const SizedBox(height: 16),
                   const Text(
@@ -241,22 +243,18 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   }
 
   List<DropdownMenuItem<AppUser>> _buildDropdownItems() {
-    return [
-      ..._existingParticipants.map(
-        (user) => DropdownMenuItem<AppUser>(
-          value: user,
-          child: Text(
-            user.name,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+    return _users
+        .map(
+          (user) => DropdownMenuItem<AppUser>(
+            value: user,
+            child: Text(
+              user.name,
+              style: _existingParticipants.contains(user)
+                  ? const TextStyle(fontWeight: FontWeight.bold)
+                  : null,
+            ),
           ),
-        ),
-      ),
-      ..._users.map(
-        (user) => DropdownMenuItem<AppUser>(
-          value: user,
-          child: Text(user.name),
-        ),
-      ),
-    ];
+        )
+        .toList();
   }
 }
