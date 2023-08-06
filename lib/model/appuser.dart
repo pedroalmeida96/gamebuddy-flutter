@@ -14,4 +14,14 @@ class AppUser {
       'name': name,
     };
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AppUser &&
+          runtimeType == other.runtimeType &&
+          userId == other.userId;
+
+  @override
+  int get hashCode => userId.hashCode;
 }
