@@ -172,7 +172,14 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                           padding: const EdgeInsets.only(right: 16, bottom: 16),
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              _handleEditGame(game.gameId);
+                              final updatedGame = Game(
+                                  gameId: game.gameId,
+                                  gameType: _gameTypeController.text,
+                                  location: _locationController.text,
+                                  gameDateTime: _gameDateTimeController.text,
+                                  participants: _selectedParticipants,
+                                  version: game.version);
+                              _handleEditGame(updatedGame);
                             },
                             icon: Icon(Icons.save),
                             label: const Text(''),
@@ -200,17 +207,10 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     );
   }
 
-  Future<void> _handleEditGame(String gameId) async {
+  Future<void> _handleEditGame(Game updatedGame) async {
     final String editedGameType = _gameTypeController.text;
     final String editedLocation = _locationController.text;
     final String editedGameDateTime = _gameDateTimeController.text;
-
-    final updatedGame = Game(
-        gameId: gameId,
-        gameType: editedGameType,
-        location: editedLocation,
-        gameDateTime: editedGameDateTime,
-        participants: _selectedParticipants);
 
     print('UPDATE $updatedGame');
 
@@ -225,7 +225,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                 GameDetailsPage(gameId: updatedGameResult.gameId)),
       );
     } catch (error) {
-      showErrorToast("Error creating a game: $error");
+      showErrorToast("Error editing game: $error");
     }
   }
 }

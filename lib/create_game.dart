@@ -100,14 +100,13 @@ class _CreateGamePageState extends State<CreateGamePage> {
     final String generatedUuid = uuid.v4();
     final gameId = generatedUuid.substring(0, 8);
     final game = Game(
-      gameId: gameId,
-      gameType: _gameTypeController.text,
-      location: _locationController.text,
-      gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-          .format(_selectedDateTime)
-          .toString(),
-      participants: [_selectedUser!],
-    );
+        gameId: gameId,
+        gameType: _gameTypeController.text,
+        location: _locationController.text,
+        gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            .format(_selectedDateTime)
+            .toString(),
+        participants: [_selectedUser!]);
 
     try {
       await createGame(game);
