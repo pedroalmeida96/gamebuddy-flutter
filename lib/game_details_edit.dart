@@ -208,12 +208,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   }
 
   Future<void> _handleEditGame(Game updatedGame) async {
-    final String editedGameType = _gameTypeController.text;
-    final String editedLocation = _locationController.text;
-    final String editedGameDateTime = _gameDateTimeController.text;
-
-    print('UPDATE $updatedGame');
-
     try {
       final updatedGameResult = await updateGame(updatedGame);
       showSuccessToast("Game updated successfully");
