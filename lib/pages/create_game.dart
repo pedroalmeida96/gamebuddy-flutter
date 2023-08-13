@@ -6,7 +6,7 @@ import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
 import 'games_list.dart';
-import 'model/appuser.dart';
+import '../model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {
   @override

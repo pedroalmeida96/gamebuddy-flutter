@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/game_details_edit.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+
+import 'game_details_edit.dart';
 
 class GameDetailsPage extends StatefulWidget {
   final int gameId;

@@ -8,7 +8,7 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
 import 'game_details_page.dart';
-import 'model/appuser.dart';
+import '../model/appuser.dart';
 
 class GameDetailsEditPage extends StatefulWidget {
   final int gameId;

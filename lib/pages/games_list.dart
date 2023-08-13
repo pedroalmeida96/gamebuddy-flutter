@@ -7,7 +7,7 @@ import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'create_game.dart';
 import 'game_details_edit.dart';
 import 'game_details_page.dart';
-import 'http/http.dart';
+import '../http/http.dart';
 
 class GameListScreen extends StatefulWidget {
   const GameListScreen({super.key});
