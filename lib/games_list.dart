@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
-import 'package:gamebuddy/widgets/FancyCard.dart';
+import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_card.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 
 import 'create_game.dart';
@@ -35,7 +35,7 @@ class _GameListScreenState extends State<GameListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Game List',
       ),
       body: Padding(
@@ -55,7 +55,7 @@ class _GameListScreenState extends State<GameListScreen> {
                   ),
                 );
               },
-              child: FancyCard(
+              child: GamebuddyCard(
                 title: 'Game ID: ${game.gameId}',
                 gameType: game.gameType,
                 location: game.location,

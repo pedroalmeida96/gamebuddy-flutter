@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class FancyAppBar extends StatelessWidget implements PreferredSizeWidget {
+class GamebuddyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const FancyAppBar({Key? key, required this.title}) : super(key: key);
+  const GamebuddyAppBar({Key? key, required this.title}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(60);

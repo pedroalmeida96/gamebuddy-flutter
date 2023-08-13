@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
@@ -54,7 +54,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Game Details',
       ),
       body: FutureBuilder<Game>(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class FancyCard extends StatelessWidget {
+class GamebuddyCard extends StatelessWidget {
   final String title;
   final String gameType;
   final String location;
@@ -8,7 +8,7 @@ class FancyCard extends StatelessWidget {
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
-  const FancyCard({
+  const GamebuddyCard({
     Key? key,
     required this.title,
     required this.gameType,

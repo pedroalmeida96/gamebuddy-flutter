@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamebuddy/game_details_edit.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 
 class GameDetailsPage extends StatefulWidget {
   final int gameId;
@@ -25,7 +25,7 @@ class GameDetailsPageState extends State<GameDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Game Details',
       ),
       body: FutureBuilder<Game>(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
@@ -35,7 +35,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Create Game',
       ),
       body: Padding(
