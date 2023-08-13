@@ -4,7 +4,6 @@ import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import '../model/game.dart';
 import 'games_list.dart';
 import 'model/appuser.dart';
