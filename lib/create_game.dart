@@ -4,7 +4,6 @@ import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
-import 'package:uuid/uuid.dart';
 import '../model/game.dart';
 import 'games_list.dart';
 import 'model/appuser.dart';
@@ -96,11 +95,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _handleAddGame() async {
-    final uuid = Uuid();
-    final String generatedUuid = uuid.v4();
-    final gameId = generatedUuid.substring(0, 8);
     final game = Game(
-      gameId: gameId,
       gameType: _gameTypeController.text,
       location: _locationController.text,
       gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")

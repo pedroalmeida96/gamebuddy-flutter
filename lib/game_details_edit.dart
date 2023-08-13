@@ -11,7 +11,7 @@ import 'game_details_page.dart';
 import 'model/appuser.dart';
 
 class GameDetailsEditPage extends StatefulWidget {
-  final String gameId;
+  final int gameId;
 
   const GameDetailsEditPage({Key? key, required this.gameId}) : super(key: key);
 
@@ -85,7 +85,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    game.gameId,
+                    game.gameId.toString(),
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -172,7 +172,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                           padding: const EdgeInsets.only(right: 16, bottom: 16),
                           child: ElevatedButton.icon(
                             onPressed: () {
-                              _handleEditGame(game.gameId);
+                              _handleEditGame(game.gameId!);
                             },
                             icon: Icon(Icons.save),
                             label: const Text(''),
@@ -200,7 +200,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     );
   }
 
-  Future<void> _handleEditGame(String gameId) async {
+  Future<void> _handleEditGame(int gameId) async {
     final String editedGameType = _gameTypeController.text;
     final String editedLocation = _locationController.text;
     final String editedGameDateTime = _gameDateTimeController.text;
@@ -222,7 +222,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                GameDetailsPage(gameId: updatedGameResult.gameId)),
+                GameDetailsPage(gameId: updatedGameResult.gameId!)),
       );
     } catch (error) {
       showErrorToast("Error creating a game: $error");
