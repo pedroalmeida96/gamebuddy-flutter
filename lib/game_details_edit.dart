@@ -66,9 +66,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
             _selectedParticipants = game.participants;
-            _selectedParticipants.forEach((user) {
-              print("Initial users ${user.name}");
-            });
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
