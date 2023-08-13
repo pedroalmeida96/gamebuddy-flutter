@@ -12,13 +12,13 @@ Future<List<Game>> fetchGames() async {
     final List<dynamic> gamesJson = jsonDecode(response.body);
     return gamesJson.map((json) => Game.fromJson(json)).toList();
   } else {
-    throw Exception('Failed to fetch games');
+    throw Exception('Failed to fetch all games');
   }
 }
 
-Future<Game> fetchGameById(String gameId) async {
-  final response =
-      await http.get(Uri.parse('http://10.0.2.2:8080/api/games/' + gameId));
+Future<Game> fetchGameById(int gameId) async {
+  final response = await http
+      .get(Uri.parse('http://10.0.2.2:8080/api/games/' + gameId.toString()));
   if (response.statusCode == 200) {
     final jsonData = jsonDecode(response.body);
     final game = Game.fromJson(jsonData);
@@ -73,7 +73,7 @@ Future<Game> updateGame(Game game) async {
   }
 }
 
-Future<void> deleteGame(String gameId) async {
+Future<void> deleteGame(int gameId) async {
   final url = Uri.parse('http://10.0.2.2:8080/api/games/delete/$gameId');
   try {
     final response = await http.delete(url);

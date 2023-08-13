@@ -1,14 +1,14 @@
 import 'appuser.dart';
 
 class Game {
-  final String gameId;
+  final int? gameId;
   final String gameType;
   final String location;
   final String gameDateTime;
   final List<AppUser> participants;
 
   Game(
-      {required this.gameId,
+      {this.gameId,
       required this.gameType,
       required this.location,
       required this.gameDateTime,

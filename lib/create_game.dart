@@ -96,11 +96,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
   }
 
   void _handleAddGame() async {
-    final uuid = Uuid();
-    final String generatedUuid = uuid.v4();
-    final gameId = generatedUuid.substring(0, 8);
     final game = Game(
-      gameId: gameId,
       gameType: _gameTypeController.text,
       location: _locationController.text,
       gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")

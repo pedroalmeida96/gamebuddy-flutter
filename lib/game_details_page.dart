@@ -5,7 +5,7 @@ import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/FancyAppBar.dart';
 
 class GameDetailsPage extends StatefulWidget {
-  final String gameId;
+  final int gameId;
 
   const GameDetailsPage({Key? key, required this.gameId}) : super(key: key);
 
@@ -47,7 +47,7 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    game.gameId,
+                    game.gameId.toString(),
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 16),
@@ -121,8 +121,8 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    GameDetailsEditPage(gameId: game.gameId),
+                                builder: (context) => GameDetailsEditPage(
+                                    gameId: game.gameId ?? 0),
                               ),
                             );
                           },

@@ -23,6 +23,7 @@ class _GameListScreenState extends State<GameListScreen> {
   void initState() {
     super.initState();
     fetchGames().then((games) {
+      print('Fetched games: $games');
       setState(() {
         _games = games;
       });
@@ -49,7 +50,7 @@ class _GameListScreenState extends State<GameListScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => GameDetailsPage(
-                      gameId: game.gameId,
+                      gameId: game.gameId!,
                     ),
                   ),
                 );
@@ -61,10 +62,10 @@ class _GameListScreenState extends State<GameListScreen> {
                 gameDateTime: game.gameDateTime,
                 onEdit: () {
                   print("edit");
-                  _handleEditGame(game.gameId);
+                  _handleEditGame(game.gameId!);
                 },
                 onDelete: () {
-                  _handleDeleteGame(game.gameId);
+                  _handleDeleteGame(game.gameId!);
                 },
               ),
             );
@@ -89,7 +90,7 @@ class _GameListScreenState extends State<GameListScreen> {
     );
   }
 
-  void _handleEditGame(String gameId) {
+  void _handleEditGame(int gameId) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -98,7 +99,7 @@ class _GameListScreenState extends State<GameListScreen> {
     );
   }
 
-  Future<void> _handleDeleteGame(String gameId) async {
+  Future<void> _handleDeleteGame(int gameId) async {
     try {
       await deleteGame(gameId);
       showSuccessToast('Game deleted successfully');
