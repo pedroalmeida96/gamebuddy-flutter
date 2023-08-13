@@ -96,13 +96,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   void _handleAddGame() async {
     final game = Game(
-      gameType: _gameTypeController.text,
-      location: _locationController.text,
-      gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-          .format(_selectedDateTime)
-          .toString(),
-      participants: [_selectedUser!],
-    );
+        gameType: _gameTypeController.text,
+        location: _locationController.text,
+        gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            .format(_selectedDateTime)
+            .toString(),
+        participants: [_selectedUser!]);
 
     try {
       await createGame(game);

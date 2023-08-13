@@ -6,13 +6,15 @@ class Game {
   final String location;
   final String gameDateTime;
   final List<AppUser> participants;
+  final int? version;
 
   Game(
       {this.gameId,
       required this.gameType,
       required this.location,
       required this.gameDateTime,
-      required this.participants});
+      required this.participants,
+      this.version});
 
   factory Game.fromJson(Map<String, dynamic> json) {
     return Game(
@@ -23,6 +25,7 @@ class Game {
       participants: (json['participants'] as List<dynamic>)
           .map((participantJson) => AppUser.fromJson(participantJson))
           .toList(),
+      version: json['version'],
     );
   }
 
@@ -34,11 +37,12 @@ class Game {
       'gameDateTime': gameDateTime,
       'participants':
           participants.map((participant) => participant.toJson()).toList(),
+      'version': version,
     };
   }
 
   @override
   String toString() {
-    return 'Game: {gameId: $gameId, gameType: $gameType, location: $location, gameDateTime: $gameDateTime, participants: $participants}';
+    return 'Game: {gameId: $gameId, gameType: $gameType, location: $location, gameDateTime: $gameDateTime, participants: $participants, version: $version}';
   }
 }
