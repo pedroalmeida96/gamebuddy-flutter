@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/pages/games_list.dart'; // Import your game list page
+import 'package:gamebuddy/pages/games_list.dart';
+
+import '../widgets/gamebuddy_appbar.dart'; // Import your game list page
 
 class RegistrationPage extends StatelessWidget {
   const RegistrationPage({super.key});
@@ -7,7 +9,9 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Registration')),
+      appBar: const GamebuddyAppBar(
+        title: 'Registration',
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
