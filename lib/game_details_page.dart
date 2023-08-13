@@ -121,8 +121,8 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => GameDetailsEditPage(
-                                    gameId: game.gameId ?? 0),
+                                builder: (context) =>
+                                    GameDetailsEditPage(gameId: game.gameId!),
                               ),
                             );
                           },
