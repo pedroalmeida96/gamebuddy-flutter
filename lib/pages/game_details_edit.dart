@@ -27,6 +27,9 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   List<AppUser> _users = [];
   List<AppUser> _selectedParticipants = [];
 
+  List<String> _gameTypes = [];
+  String? _selectedGameType;
+
   @override
   void initState() {
     super.initState();
@@ -34,6 +37,15 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     _gameTypeController = TextEditingController();
     _locationController = TextEditingController();
     _gameDateTimeController = TextEditingController();
+
+    fetchGameTypes().then((gameTypes) {
+      setState(() {
+        _gameTypes = gameTypes;
+      });
+    }).catchError((error) {
+      print('Failed to fetch gameTypes: $error');
+    });
+
     fetchUsers().then((users) {
       setState(() {
         _users = users;
@@ -106,20 +118,21 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     },
                   ),
                   const SizedBox(height: 16),
-                  const Text(
-                    'Game Type:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  TextFormField(
-                    controller: _gameTypeController,
-                    style: const TextStyle(fontSize: 16),
+                  DropdownButtonFormField<String>(
+                    value: _selectedGameType,
+                    items: _gameTypes.map((gameType) {
+                      return DropdownMenuItem<String>(
+                        value: gameType,
+                        child: Text(gameType),
+                      );
+                    }).toList(),
+                    onChanged: (gameType) {
+                      setState(() {
+                        _selectedGameType = gameType;
+                      });
+                    },
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(10),
+                      labelText: 'Select Game Type',
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -171,7 +184,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                             onPressed: () {
                               final updatedGame = Game(
                                   gameId: game.gameId,
-                                  gameType: _gameTypeController.text,
+                                  gameType: _selectedGameType!,
                                   location: _locationController.text,
                                   gameDateTime: _gameDateTimeController.text,
                                   participants: _selectedParticipants,

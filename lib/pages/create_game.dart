@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
-import 'package:gamebuddy/model/game_type.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
-import 'games_list.dart';
 import '../model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {

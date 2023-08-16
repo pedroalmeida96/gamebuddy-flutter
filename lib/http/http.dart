@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 
 import '../model/appuser.dart';
 import '../model/game.dart';
-import '../model/game_type.dart';
 import '../model/token_manager.dart';
 
 const String baseUrl = 'http://10.0.2.2:8080/api/games';
