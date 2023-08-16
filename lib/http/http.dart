@@ -115,15 +115,16 @@ Future<List<AppUser>> fetchUsers() async {
   }
 }
 
-Future<List<GameType>> fetchGameTypes() async {
+Future<List<String>> fetchGameTypes() async {
   final response = await http.get(
     Uri.parse('http://10.0.2.2:8080/api/gameTypes'),
     headers: {'Authorization': 'Bearer $authToken'},
   );
 
   if (response.statusCode == 200) {
+    print(response.body);
     final List<dynamic> gameTypesJson = jsonDecode(response.body);
-    return gameTypesJson.map((json) => GameType.fromJson(json)).toList();
+    return gameTypesJson.map((json) => json.toString()).toList();
   } else {
     throw Exception('Failed to fetch gameTypes');
   }

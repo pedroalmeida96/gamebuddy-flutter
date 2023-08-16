@@ -21,8 +21,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
   List<AppUser> _users = [];
   AppUser? _selectedUser;
 
-  List<GameType> _gameTypes = [];
-  GameType? _selectedGameType;
+  List<String> _gameTypes = [];
+  String? _selectedGameType;
 
   @override
   void initState() {
@@ -71,12 +71,12 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 labelText: 'Select User',
               ),
             ),
-            DropdownButtonFormField<GameType>(
+            DropdownButtonFormField<String>(
               value: _selectedGameType,
               items: _gameTypes.map((gameType) {
-                return DropdownMenuItem<GameType>(
+                return DropdownMenuItem<String>(
                   value: gameType,
-                  child: Text(gameType.name),
+                  child: Text(gameType),
                 );
               }).toList(),
               onChanged: (gameType) {
@@ -86,12 +86,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
               },
               decoration: const InputDecoration(
                 labelText: 'Select Game Type',
-              ),
-            ),
-            TextField(
-              controller: _gameTypeController,
-              decoration: const InputDecoration(
-                labelText: 'Game Type',
               ),
             ),
             TextField(
@@ -125,7 +119,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   void _handleAddGame() async {
     final game = Game(
-        gameType: _gameTypeController.text,
+        gameType: _selectedGameType!,
         location: _locationController.text,
         gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
             .format(_selectedDateTime)
@@ -135,12 +129,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     try {
       await createGame(game);
       showSuccessToast('New game created successfully');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const GameListScreen(),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/gameList');
     } catch (error) {
       showErrorToast('Error creating a game: $error');
     }
