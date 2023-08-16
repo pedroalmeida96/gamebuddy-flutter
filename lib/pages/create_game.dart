@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
+import 'package:gamebuddy/model/game_type.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
@@ -20,9 +21,20 @@ class _CreateGamePageState extends State<CreateGamePage> {
   List<AppUser> _users = [];
   AppUser? _selectedUser;
 
+  List<GameType> _gameTypes = [];
+  GameType? _selectedGameType;
+
   @override
   void initState() {
     super.initState();
+    fetchGameTypes().then((gameTypes) {
+      setState(() {
+        _gameTypes = gameTypes;
+      });
+    }).catchError((error) {
+      print('Failed to fetch gameTypes: $error');
+    });
+
     fetchUsers().then((users) {
       setState(() {
         _users = users;
@@ -57,6 +69,23 @@ class _CreateGamePageState extends State<CreateGamePage> {
               },
               decoration: const InputDecoration(
                 labelText: 'Select User',
+              ),
+            ),
+            DropdownButtonFormField<GameType>(
+              value: _selectedGameType,
+              items: _gameTypes.map((gameType) {
+                return DropdownMenuItem<GameType>(
+                  value: gameType,
+                  child: Text(gameType.name),
+                );
+              }).toList(),
+              onChanged: (gameType) {
+                setState(() {
+                  _selectedGameType = gameType;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'Select Game Type',
               ),
             ),
             TextField(

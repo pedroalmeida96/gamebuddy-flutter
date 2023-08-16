@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
+import '../http/http.dart';
+import '../model/token_manager.dart';
 import '../widgets/gamebuddy_appbar.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +24,7 @@ class LoginPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -25,22 +32,38 @@ class LoginPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             TextFormField(
+              controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
               ),
               obscureText: true,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             ElevatedButton(
-              onPressed: () {
-                // Perform login logic here
-                // After successful login, navigate to the GameListScreen
-                Navigator.pushReplacementNamed(context, '/gameList');
+              onPressed: () async {
+                try {
+                  final token = await performLogin(
+                      _emailController.text, _passwordController.text);
+                  TokenManager.authToken = token;
+                  if (TokenManager.authToken != null) {
+                    Fluttertoast.showToast(
+                      msg: 'Auth token retrieved!',
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: Colors.green,
+                      textColor: Colors.white,
+                    );
+                  }
+                  // Navigate to the GameListScreen
+                  Navigator.pushReplacementNamed(context, '/gameList');
+                } catch (e) {
+                  print('Error during login: $e');
+                }
               },
               child: const Text('Login'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
