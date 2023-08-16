@@ -11,40 +11,37 @@ class GamebuddyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.blue,
-      elevation: 0,
-      title: Text(
-        title,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 2,
+      elevation: 5,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(20), // Rounded corner on the left
         ),
       ),
-      flexibleSpace: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue, Colors.deepPurple],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
+      backgroundColor: Colors.transparent,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue, Colors.deepPurple],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: -20,
-            child: Container(
-              height: 35,
-              decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(20), // Keep rounded corner on the left
+          ),
+        ),
+        child: Center(
+          child: Transform.translate(
+            offset: const Offset(0, 20), // Adjust the vertical offset here
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(40),
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }
