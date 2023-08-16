@@ -21,14 +21,14 @@ class GameDetailsEditPage extends StatefulWidget {
 
 class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late Future<Game> _gameFuture;
-  late TextEditingController _gameTypeController;
   late TextEditingController _locationController;
   late TextEditingController _gameDateTimeController;
-  List<AppUser> _users = [];
-  List<AppUser> _selectedParticipants = [];
-
   List<String> _gameTypes = [];
   String? _selectedGameType;
+  String? _newSelectedGameType;
+
+  List<AppUser> _users = [];
+  List<AppUser> _selectedParticipants = [];
 
   @override
   void initState() {
@@ -56,7 +56,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
 
   @override
   void dispose() {
-    _gameTypeController.dispose();
     _locationController.dispose();
     _gameDateTimeController.dispose();
     super.dispose();
@@ -73,10 +72,10 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final game = snapshot.data!;
-            _selectedGameType = game.gameType;
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
             _selectedParticipants = game.participants;
+            _selectedGameType = game.gameType;
 
             return Padding(
               padding: const EdgeInsets.all(16.0),
@@ -127,7 +126,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     }).toList(),
                     onChanged: (gameType) {
                       setState(() {
-                        _selectedGameType = gameType;
+                        _newSelectedGameType = gameType;
                       });
                     },
                     decoration: const InputDecoration(
@@ -183,11 +182,12 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                             onPressed: () {
                               final updatedGame = Game(
                                   gameId: game.gameId,
-                                  gameType: _selectedGameType!,
+                                  gameType: _newSelectedGameType!,
                                   location: _locationController.text,
                                   gameDateTime: _gameDateTimeController.text,
                                   participants: _selectedParticipants,
                                   version: game.version);
+                              print(updatedGame);
                               _handleEditGame(updatedGame);
                             },
                             icon: const Icon(Icons.save),

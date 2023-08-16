@@ -13,7 +13,6 @@ class CreateGamePage extends StatefulWidget {
 }
 
 class _CreateGamePageState extends State<CreateGamePage> {
-  final TextEditingController _gameTypeController = TextEditingController();
   final TextEditingController _locationController = TextEditingController();
   DateTime _selectedDateTime = DateTime.now();
   List<AppUser> _users = [];
@@ -135,7 +134,6 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   @override
   void dispose() {
-    _gameTypeController.dispose();
     _locationController.dispose();
     super.dispose();
   }
