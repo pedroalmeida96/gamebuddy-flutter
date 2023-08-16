@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../http/http.dart';
 import '../widgets/gamebuddy_appbar.dart'; // Import your game list page
 
 class RegistrationPage extends StatelessWidget {
-  const RegistrationPage({super.key});
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  RegistrationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class RegistrationPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             TextFormField(
+              controller: _emailController,
               decoration: const InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
@@ -25,6 +29,7 @@ class RegistrationPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
@@ -33,13 +38,16 @@ class RegistrationPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                performRegistration(
+                    _emailController.text, _passwordController.text);
+                Navigator.pushReplacementNamed(context, '/login');
+              },
               child: const Text('Register'),
             ),
             const SizedBox(height: 8),
             TextButton(
               onPressed: () {
-                // Navigate to the login page
                 Navigator.pushReplacementNamed(context, '/login');
               },
               child: const Text('Already have an account? Login'),

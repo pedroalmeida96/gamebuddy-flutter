@@ -155,3 +155,27 @@ Future<String> performLogin(String username, String password) async {
     throw Exception('Login failed');
   }
 }
+
+Future<String> performRegistration(String username, String password) async {
+  final Uri loginUrl = Uri.parse('http://10.0.2.2:8080/registration');
+  final requestBody = {
+    'username': username,
+    'password': password,
+  };
+
+  // Print the request body as a JSON string
+  final requestBodyJson = json.encode(requestBody);
+  print("Request Body JSON: $requestBodyJson");
+
+  final response = await http.post(
+    loginUrl,
+    headers: {'Content-Type': 'application/json'},
+    body: requestBodyJson,
+  );
+
+  if (response.statusCode == 200) {
+    return "Ok";
+  } else {
+    throw Exception('Login failed');
+  }
+}

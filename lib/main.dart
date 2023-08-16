@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login', // Change this to your desired initial route
       routes: {
         '/login': (context) => LoginPage(),
-        '/register': (context) => const RegistrationPage(),
+        '/register': (context) => RegistrationPage(),
         '/gameList': (context) => const GameListScreen(),
       },
     );
