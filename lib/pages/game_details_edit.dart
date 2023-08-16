@@ -34,7 +34,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   void initState() {
     super.initState();
     _gameFuture = fetchGameById(widget.gameId);
-    _gameTypeController = TextEditingController();
     _locationController = TextEditingController();
     _gameDateTimeController = TextEditingController();
 
@@ -74,7 +73,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final game = snapshot.data!;
-            _gameTypeController.text = game.gameType;
+            _selectedGameType = game.gameType;
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
             _selectedParticipants = game.participants;
