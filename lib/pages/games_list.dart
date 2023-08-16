@@ -10,7 +10,7 @@ import 'game_details_page.dart';
 import '../http/http.dart';
 
 class GameListScreen extends StatefulWidget {
-  const GameListScreen({super.key});
+  const GameListScreen({Key? key}) : super(key: key);
 
   @override
   _GameListScreenState createState() => _GameListScreenState();

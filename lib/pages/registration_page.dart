@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/pages/games_list.dart';
 
 import '../widgets/gamebuddy_appbar.dart'; // Import your game list page
 
@@ -24,7 +23,7 @@ class RegistrationPage extends StatelessWidget {
                 border: OutlineInputBorder(),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextFormField(
               decoration: const InputDecoration(
                 labelText: 'Password',
@@ -32,19 +31,12 @@ class RegistrationPage extends StatelessWidget {
               ),
               obscureText: true,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {
-                // Perform registration logic here
-                // After successful registration, navigate to the GameListScreen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => GameListScreen()),
-                );
-              },
+              onPressed: () {},
               child: const Text('Register'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             TextButton(
               onPressed: () {
                 // Navigate to the login page

@@ -5,7 +5,6 @@ import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
-import 'games_list.dart';
 import '../model/appuser.dart';
 
 class CreateGamePage extends StatefulWidget {
@@ -20,9 +19,20 @@ class _CreateGamePageState extends State<CreateGamePage> {
   List<AppUser> _users = [];
   AppUser? _selectedUser;
 
+  List<String> _gameTypes = [];
+  String? _selectedGameType;
+
   @override
   void initState() {
     super.initState();
+    fetchGameTypes().then((gameTypes) {
+      setState(() {
+        _gameTypes = gameTypes;
+      });
+    }).catchError((error) {
+      print('Failed to fetch gameTypes: $error');
+    });
+
     fetchUsers().then((users) {
       setState(() {
         _users = users;
@@ -59,10 +69,21 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 labelText: 'Select User',
               ),
             ),
-            TextField(
-              controller: _gameTypeController,
+            DropdownButtonFormField<String>(
+              value: _selectedGameType,
+              items: _gameTypes.map((gameType) {
+                return DropdownMenuItem<String>(
+                  value: gameType,
+                  child: Text(gameType),
+                );
+              }).toList(),
+              onChanged: (gameType) {
+                setState(() {
+                  _selectedGameType = gameType;
+                });
+              },
               decoration: const InputDecoration(
-                labelText: 'Game Type',
+                labelText: 'Select Game Type',
               ),
             ),
             TextField(
@@ -96,7 +117,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
 
   void _handleAddGame() async {
     final game = Game(
-        gameType: _gameTypeController.text,
+        gameType: _selectedGameType!,
         location: _locationController.text,
         gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
             .format(_selectedDateTime)
@@ -106,12 +127,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
     try {
       await createGame(game);
       showSuccessToast('New game created successfully');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const GameListScreen(),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/gameList');
     } catch (error) {
       showErrorToast('Error creating a game: $error');
     }
