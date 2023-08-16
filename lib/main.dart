@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/pages/games_list.dart';
 import 'package:gamebuddy/pages/login_page.dart';
+import 'package:gamebuddy/pages/menu_page.dart';
 import 'package:gamebuddy/pages/registration_page.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/register': (context) => RegistrationPage(),
         '/gameList': (context) => const GameListScreen(),
+        '/menu': (context) => MenuPage(),
       },
     );
   }

@@ -55,7 +55,7 @@ class LoginPage extends StatelessWidget {
                       textColor: Colors.white,
                     );
                   }
-                  Navigator.pushReplacementNamed(context, '/gameList');
+                  Navigator.pushReplacementNamed(context, '/menu');
                 } catch (e) {
                   print('Error during login: $e');
                 }
