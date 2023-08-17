@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
 import 'package:gamebuddy/widgets/gamebuddy_textfield.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
@@ -174,23 +175,20 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     ),
                     // Save button
                     const SizedBox(height: 16),
-                    Align(
-                      alignment: Alignment.bottomRight,
-                      child: ElevatedButton.icon(
-                        onPressed: () {
-                          final updatedGame = Game(
-                              gameId: game.gameId,
-                              gameType: _selectedGameType!,
-                              location: _locationController.text,
-                              gameDateTime: _gameDateTimeController.text,
-                              participants: _selectedParticipants,
-                              version: game.version);
-                          print("updated game: $updatedGame");
-                          _handleEditGame(updatedGame);
-                        },
-                        icon: const Icon(Icons.save),
-                        label: const Text('Save'),
-                      ),
+                    GamebuddyButton(
+                      icon: const Icon(Icons.save),
+                      buttonText: 'Save',
+                      onPressed: () {
+                        final updatedGame = Game(
+                          gameId: game.gameId,
+                          gameType: _selectedGameType!,
+                          location: _locationController.text,
+                          gameDateTime: _gameDateTimeController.text,
+                          participants: _selectedParticipants,
+                          version: game.version,
+                        );
+                        _handleEditGame(updatedGame);
+                      },
                     ),
                   ],
                 ),

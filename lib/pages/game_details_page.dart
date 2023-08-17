@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
 
 import 'game_details_edit.dart';
 
@@ -34,7 +35,8 @@ class GameDetailsPageState extends State<GameDetailsPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final game = snapshot.data!;
-            return Padding(
+            return SingleChildScrollView(
+                child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -115,30 +117,23 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                         .toString(), // Adjust the formatting as needed
                     style: const TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(height: 4),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16, bottom: 16),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    GameDetailsEditPage(gameId: game.gameId!),
-                              ),
-                            );
-                          },
-                          child: const Text('Edit Game Details'),
-                        ),
-                      ),
-                    ),
-                  )
+                  const SizedBox(height: 16),
+                  GamebuddyButton(
+                      buttonText: 'Edit game',
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GameDetailsEditPage(
+                              gameId: game.gameId!,
+                            ),
+                          ),
+                        );
+                      }),
                 ],
               ),
-            );
+            ));
           } else if (snapshot.hasError) {
             return const Center(
               child: Text(
