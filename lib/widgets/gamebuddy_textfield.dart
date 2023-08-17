@@ -4,6 +4,7 @@ class GamebuddyTextField extends StatelessWidget {
   final String labelText;
   final String? initialText;
   final bool isEnabled;
+  final bool? obscureText;
   final TextEditingController? controller;
 
   const GamebuddyTextField({
@@ -12,6 +13,7 @@ class GamebuddyTextField extends StatelessWidget {
     this.initialText,
     this.isEnabled = false,
     this.controller,
+    this.obscureText,
   });
 
   @override
@@ -21,6 +23,7 @@ class GamebuddyTextField extends StatelessWidget {
     return TextFormField(
       enabled: isEnabled,
       controller: controller,
+      obscureText: obscureText == true ? true : false,
       style: const TextStyle(
         fontSize: 16,
         color: Colors.black,

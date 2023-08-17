@@ -15,7 +15,7 @@ class GamebuddyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomRight,
+      alignment: Alignment.center,
       child: ElevatedButton.icon(
         onPressed: onPressed,
         icon: icon,

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
 
 import '../http/http.dart';
-import '../widgets/gamebuddy_appbar.dart'; // Import your game list page
+import '../widgets/gamebuddy_appbar.dart';
+import '../widgets/gamebuddy_textfield.dart'; // Import your game list page
 
 class RegistrationPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -21,47 +23,47 @@ class RegistrationPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            TextFormField(
+            GamebuddyTextField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
+              isEnabled: true,
+              labelText: 'User',
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            GamebuddyTextField(
               controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
+              isEnabled: true,
+              labelText: 'Name',
             ),
             const SizedBox(height: 16),
-            TextFormField(
+            GamebuddyTextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
+              isEnabled: true,
               obscureText: true,
+              labelText: 'Password',
             ),
             const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                performRegistration(_emailController.text, _nameController.text,
-                    _passwordController.text);
-                Navigator.pushReplacementNamed(context, '/login');
-              },
-              child: const Text('Register'),
-            ),
+            GamebuddyButton(
+                onPressed: () {
+                  performRegistration(_emailController.text,
+                      _nameController.text, _passwordController.text);
+                  Navigator.pushReplacementNamed(context, '/login');
+                },
+                buttonText: 'Register',
+                icon: const Icon(Icons.account_circle)),
             const SizedBox(height: 8),
-            TextButton(
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, '/login');
-              },
-              child: const Text('Already have an account? Login'),
-            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already have an account?"),
+                TextButton(
+                  onPressed: () {
+                    // Navigate to the registration page
+                    Navigator.pushReplacementNamed(context, '/login');
+                  },
+                  child: const Text('Login'),
+                ),
+              ],
+            )
           ],
         ),
       ),

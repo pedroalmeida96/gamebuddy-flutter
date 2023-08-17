@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
+import 'package:gamebuddy/widgets/gamebuddy_textfield.dart';
 
 import '../http/http.dart';
 import '../model/token_manager.dart';
@@ -23,45 +25,41 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            TextFormField(
+            GamebuddyTextField(
               controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
+              isEnabled: true,
+              labelText: 'User',
             ),
-            SizedBox(height: 16),
-            TextFormField(
+            const SizedBox(height: 16),
+            GamebuddyTextField(
               controller: _passwordController,
-              decoration: const InputDecoration(
-                labelText: 'Password',
-                border: OutlineInputBorder(),
-              ),
+              isEnabled: true,
               obscureText: true,
+              labelText: 'Password',
             ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  final token = await performLogin(
-                      _emailController.text, _passwordController.text);
-                  TokenManager.authToken = token;
-                  if (TokenManager.authToken != null) {
-                    Fluttertoast.showToast(
-                      msg: 'Auth token retrieved!',
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: Colors.green,
-                      textColor: Colors.white,
-                    );
+            const SizedBox(height: 16),
+            GamebuddyButton(
+                onPressed: () async {
+                  try {
+                    final token = await performLogin(
+                        _emailController.text, _passwordController.text);
+                    TokenManager.authToken = token;
+                    if (TokenManager.authToken != null) {
+                      Fluttertoast.showToast(
+                        msg: 'Auth token retrieved!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                      );
+                    }
+                    Navigator.pushReplacementNamed(context, '/menu');
+                  } catch (e) {
+                    print('Error during login: $e');
                   }
-                  Navigator.pushReplacementNamed(context, '/menu');
-                } catch (e) {
-                  print('Error during login: $e');
-                }
-              },
-              child: const Text('Login'),
-            ),
+                },
+                buttonText: 'Login',
+                icon: const Icon(Icons.login)),
             const SizedBox(height: 8),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
