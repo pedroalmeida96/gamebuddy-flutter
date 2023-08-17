@@ -156,10 +156,12 @@ Future<String> performLogin(String username, String password) async {
   }
 }
 
-Future<String> performRegistration(String username, String password) async {
+Future<String> performRegistration(
+    String username, String name, String password) async {
   final Uri loginUrl = Uri.parse('http://10.0.2.2:8080/registration');
   final requestBody = {
     'username': username,
+    'name': name,
     'password': password,
   };
 

@@ -182,7 +182,8 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                             onPressed: () {
                               final updatedGame = Game(
                                   gameId: game.gameId,
-                                  gameType: _newSelectedGameType!,
+                                  gameType: _newSelectedGameType ??
+                                      _selectedGameType!,
                                   location: _locationController.text,
                                   gameDateTime: _gameDateTimeController.text,
                                   participants: _selectedParticipants,

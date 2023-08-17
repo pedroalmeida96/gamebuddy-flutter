@@ -5,6 +5,7 @@ import '../widgets/gamebuddy_appbar.dart'; // Import your game list page
 
 class RegistrationPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   RegistrationPage({super.key});
 
@@ -29,6 +30,15 @@ class RegistrationPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(),
+              ),
+              obscureText: true,
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
               controller: _passwordController,
               decoration: const InputDecoration(
                 labelText: 'Password',
@@ -39,8 +49,8 @@ class RegistrationPage extends StatelessWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                performRegistration(
-                    _emailController.text, _passwordController.text);
+                performRegistration(_emailController.text, _nameController.text,
+                    _passwordController.text);
                 Navigator.pushReplacementNamed(context, '/login');
               },
               child: const Text('Register'),

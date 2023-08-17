@@ -30,16 +30,16 @@ class MenuPage extends StatelessWidget {
                   ),
                   MenuCard(
                     title: 'All Games',
-                    icon: Icons.games,
+                    icon: Icons.list_alt,
                     onTap: () {
                       Navigator.pushNamed(context, '/gameList');
                     },
                   ),
                   MenuCard(
-                    title: 'Available Games',
-                    icon: Icons.list_alt,
+                    title: 'Search',
+                    icon: Icons.search,
                     onTap: () {
-                      Navigator.pushNamed(context, '/availableGames');
+                      Navigator.pushNamed(context, '/search');
                     },
                   ),
                   MenuCard(
