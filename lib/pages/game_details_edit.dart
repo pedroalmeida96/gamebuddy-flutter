@@ -4,6 +4,7 @@ import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
+import 'package:intl/intl.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 
@@ -25,8 +26,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late TextEditingController _gameDateTimeController;
   List<String> _gameTypes = [];
   String? _selectedGameType;
-  String? _newSelectedGameType;
-
   List<AppUser> _users = [];
   List<AppUser> _selectedParticipants = [];
 
@@ -37,6 +36,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     _locationController = TextEditingController();
     _gameDateTimeController = TextEditingController();
 
+    // Fetch game types and users
     fetchGameTypes().then((gameTypes) {
       setState(() {
         _gameTypes = gameTypes;
@@ -72,6 +72,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final game = snapshot.data!;
+            // Set initial values for fields
             _locationController.text = game.location;
             _gameDateTimeController.text = game.gameDateTime.toString();
             _selectedParticipants = game.participants;
@@ -83,6 +84,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 16),
+                  // Display game ID
                   const Text(
                     'Game ID:',
                     style: TextStyle(
@@ -95,6 +97,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     game.gameId.toString(),
                     style: const TextStyle(fontSize: 16),
                   ),
+                  // Participants selection
                   const SizedBox(height: 16),
                   const Text(
                     'Participants:',
@@ -111,10 +114,10 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                             (user) => MultiSelectItem<AppUser>(user, user.name))
                         .toList(),
                     onConfirm: (values) {
-                      print("values POA: ${values}");
                       _selectedParticipants = values;
                     },
                   ),
+                  // Game Type dropdown
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
                     value: _selectedGameType,
@@ -125,14 +128,13 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                       );
                     }).toList(),
                     onChanged: (gameType) {
-                      setState(() {
-                        _newSelectedGameType = gameType;
-                      });
+                      _selectedGameType = gameType;
                     },
                     decoration: const InputDecoration(
                       labelText: 'Select Game Type',
                     ),
                   ),
+                  // Location text input
                   const SizedBox(height: 16),
                   const Text(
                     'Location:',
@@ -150,6 +152,7 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                       contentPadding: EdgeInsets.all(10),
                     ),
                   ),
+                  // Date and Time picker
                   const SizedBox(height: 16),
                   const Text(
                     'Game DateTime:',
@@ -166,34 +169,30 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                       initialDateTime:
                           DateTime.parse(_gameDateTimeController.text),
                       onDateTimeChanged: (DateTime newDateTime) {
-                        setState(() {
-                          _gameDateTimeController.text = newDateTime.toString();
-                        });
+                        _gameDateTimeController.text =
+                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                .format(newDateTime);
                       },
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                          padding: const EdgeInsets.only(right: 16, bottom: 16),
-                          child: ElevatedButton.icon(
-                            onPressed: () {
-                              final updatedGame = Game(
-                                  gameId: game.gameId,
-                                  gameType: _newSelectedGameType ??
-                                      _selectedGameType!,
-                                  location: _locationController.text,
-                                  gameDateTime: _gameDateTimeController.text,
-                                  participants: _selectedParticipants,
-                                  version: game.version);
-                              print(updatedGame);
-                              _handleEditGame(updatedGame);
-                            },
-                            icon: const Icon(Icons.save),
-                            label: const Text(''),
-                          )),
+                  // Save button
+                  const SizedBox(height: 16),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        final updatedGame = Game(
+                            gameId: game.gameId,
+                            gameType: _selectedGameType!,
+                            location: _locationController.text,
+                            gameDateTime: _gameDateTimeController.text,
+                            participants: _selectedParticipants,
+                            version: game.version);
+                        print("updated game: $updatedGame");
+                        _handleEditGame(updatedGame);
+                      },
+                      icon: const Icon(Icons.save),
+                      label: const Text('Save'),
                     ),
                   ),
                 ],
@@ -225,11 +224,12 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                GameDetailsPage(gameId: updatedGameResult.gameId!)),
+          builder: (context) =>
+              GameDetailsPage(gameId: updatedGameResult.gameId!),
+        ),
       );
     } catch (error) {
-      showErrorToast("Error creating a game: $error");
+      showErrorToast("Error updating the game: $error");
     }
   }
 }
