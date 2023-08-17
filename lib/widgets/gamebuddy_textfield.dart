@@ -44,7 +44,7 @@ class GamebuddyTextField extends StatelessWidget {
           borderSide: const BorderSide(color: Colors.blue),
         ),
         filled: true,
-        fillColor: Colors.grey[200],
+        fillColor: isEnabled ? Colors.white : Colors.grey[200],
         contentPadding: const EdgeInsets.all(12),
       ),
     );
