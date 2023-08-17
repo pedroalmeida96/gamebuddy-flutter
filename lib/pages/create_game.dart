@@ -6,6 +6,8 @@ import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
 import '../model/appuser.dart';
+import '../widgets/gamebuddy_dropdown.dart';
+import '../widgets/gamebuddy_textfield.dart';
 
 class CreateGamePage extends StatefulWidget {
   @override
@@ -66,7 +68,8 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 labelText: 'Select User',
               ),
             ),
-            DropdownButtonFormField<String>(
+            const SizedBox(height: 16),
+            GamebuddyDropdown<String>(
               value: _selectedGameType,
               items: _gameTypes.map((gameType) {
                 return DropdownMenuItem<String>(
@@ -77,15 +80,13 @@ class _CreateGamePageState extends State<CreateGamePage> {
               onChanged: (gameType) {
                 _selectedGameType = gameType;
               },
-              decoration: const InputDecoration(
-                labelText: 'Select Game Type',
-              ),
+              labelText: 'Select Game Type',
             ),
-            TextField(
+            const SizedBox(height: 16),
+            GamebuddyTextField(
               controller: _locationController,
-              decoration: const InputDecoration(
-                labelText: 'Location',
-              ),
+              isEnabled: true,
+              labelText: 'Location',
             ),
             SizedBox(
               height: 125,
