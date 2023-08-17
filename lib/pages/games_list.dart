@@ -74,8 +74,8 @@ class _GameListScreenState extends State<GameListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _handleAddGame,
-        child: Icon(Icons.add),
         backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
