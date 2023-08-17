@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
 import 'package:gamebuddy/widgets/toast_utils.dart';
 import 'package:intl/intl.dart';
 import '../model/game.dart';
@@ -100,27 +101,28 @@ class _CreateGamePageState extends State<CreateGamePage> {
                   ),
                 ),
                 const SizedBox(height: 16.0),
-                ElevatedButton(
-                  onPressed: _handleAddGame,
-                  child: const Text('Add Game'),
-                ),
+                GamebuddyButton(
+                    onPressed: () {
+                      final newGame = Game(
+                          gameType: _selectedGameType!,
+                          location: _locationController.text,
+                          gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
+                              .format(_selectedDateTime)
+                              .toString(),
+                          participants: [_selectedUser!]);
+                      _handleAddGame(newGame);
+                    },
+                    buttonText: 'Add Game',
+                    icon: const Icon(Icons.add))
               ],
             ),
           ),
         ));
   }
 
-  void _handleAddGame() async {
-    final game = Game(
-        gameType: _selectedGameType!,
-        location: _locationController.text,
-        gameDateTime: DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            .format(_selectedDateTime)
-            .toString(),
-        participants: [_selectedUser!]);
-
+  void _handleAddGame(Game newGame) async {
     try {
-      await createGame(game);
+      await createGame(newGame);
       showSuccessToast('New game created successfully');
       Navigator.pushReplacementNamed(context, '/gameList');
     } catch (error) {
