@@ -23,8 +23,8 @@ class _GameListScreenState extends State<GameListScreen> {
   void initState() {
     super.initState();
     fetchGames().then((games) {
-      print('Fetched games: $games');
       setState(() {
+        print('Fetched games: $games');
         _games = games;
       });
     }).catchError((error) {
@@ -104,7 +104,6 @@ class _GameListScreenState extends State<GameListScreen> {
       await deleteGame(gameId);
       showSuccessToast('Game deleted successfully');
       setState(() {
-        // Remove the deleted game from the list of games
         _games.removeWhere((game) => game.gameId == gameId);
       });
     } catch (error) {

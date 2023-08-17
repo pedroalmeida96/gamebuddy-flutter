@@ -60,9 +60,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 );
               }).toList(),
               onChanged: (user) {
-                setState(() {
-                  _selectedUser = user;
-                });
+                _selectedUser = user;
               },
               decoration: const InputDecoration(
                 labelText: 'Select User',
@@ -77,9 +75,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 );
               }).toList(),
               onChanged: (gameType) {
-                setState(() {
-                  _selectedGameType = gameType;
-                });
+                _selectedGameType = gameType;
               },
               decoration: const InputDecoration(
                 labelText: 'Select Game Type',
@@ -97,9 +93,7 @@ class _CreateGamePageState extends State<CreateGamePage> {
                 mode: CupertinoDatePickerMode.dateAndTime,
                 initialDateTime: _selectedDateTime,
                 onDateTimeChanged: (DateTime newDateTime) {
-                  setState(() {
-                    _selectedDateTime = newDateTime;
-                  });
+                  _selectedDateTime = newDateTime;
                 },
               ),
             ),
