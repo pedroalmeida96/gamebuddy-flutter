@@ -25,7 +25,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
   late Future<Game> _gameFuture;
   late TextEditingController _locationController;
   late TextEditingController _gameDateTimeController;
-  late TextEditingController _auxController;
   List<String> _gameTypes = [];
   String? _selectedGameType;
   List<AppUser> _users = [];
@@ -37,9 +36,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
     _gameFuture = fetchGameById(widget.gameId);
     _locationController = TextEditingController();
     _gameDateTimeController = TextEditingController();
-    _auxController = TextEditingController();
-
-    // Fetch game types and users
     fetchGameTypes().then((gameTypes) {
       setState(() {
         _gameTypes = gameTypes;
@@ -172,7 +168,6 @@ class GameDetailsEditPageState extends State<GameDetailsEditPage> {
                     ),
                     const SizedBox(height: 16),
                     GamebuddyTextField(
-                      controller: _auxController,
                       isEnabled: false,
                       labelText: 'Author',
                       initialText: game.author,

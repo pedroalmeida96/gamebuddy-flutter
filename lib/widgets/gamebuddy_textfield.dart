@@ -4,19 +4,19 @@ class GamebuddyTextField extends StatelessWidget {
   final String labelText;
   final String? initialText;
   final bool isEnabled;
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   const GamebuddyTextField({
     super.key,
     required this.labelText,
     this.initialText,
     this.isEnabled = false,
-    required this.controller,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    controller.text = initialText == null ? controller.text : initialText!;
+    controller?.text = (initialText == null ? controller?.text : initialText!)!;
 
     return TextFormField(
       enabled: isEnabled,
