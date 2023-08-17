@@ -46,67 +46,68 @@ class _CreateGamePageState extends State<CreateGamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GamebuddyAppBar(
-        title: 'Create Game',
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            DropdownButtonFormField<AppUser>(
-              value: _selectedUser,
-              items: _users.map((user) {
-                return DropdownMenuItem<AppUser>(
-                  value: user,
-                  child: Text(user.name),
-                );
-              }).toList(),
-              onChanged: (user) {
-                _selectedUser = user;
-              },
-              decoration: const InputDecoration(
-                labelText: 'Select User',
-              ),
-            ),
-            const SizedBox(height: 16),
-            GamebuddyDropdown<String>(
-              value: _selectedGameType,
-              items: _gameTypes.map((gameType) {
-                return DropdownMenuItem<String>(
-                  value: gameType,
-                  child: Text(gameType),
-                );
-              }).toList(),
-              onChanged: (gameType) {
-                _selectedGameType = gameType;
-              },
-              labelText: 'Select Game Type',
-            ),
-            const SizedBox(height: 16),
-            GamebuddyTextField(
-              controller: _locationController,
-              isEnabled: true,
-              labelText: 'Location',
-            ),
-            SizedBox(
-              height: 125,
-              child: CupertinoDatePicker(
-                mode: CupertinoDatePickerMode.dateAndTime,
-                initialDateTime: _selectedDateTime,
-                onDateTimeChanged: (DateTime newDateTime) {
-                  _selectedDateTime = newDateTime;
-                },
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _handleAddGame,
-              child: const Text('Add Game'),
-            ),
-          ],
+        appBar: const GamebuddyAppBar(
+          title: 'Create Game',
         ),
-      ),
-    );
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                GamebuddyDropdown<AppUser>(
+                  value: _selectedUser,
+                  items: _users.map((user) {
+                    return DropdownMenuItem<AppUser>(
+                      value: user,
+                      child: Text(user.name),
+                    );
+                  }).toList(),
+                  onChanged: (user) {
+                    _selectedUser = user;
+                  },
+                  labelText: 'Select User',
+                ),
+                const SizedBox(height: 16),
+                GamebuddyDropdown<String>(
+                  value: _selectedGameType,
+                  items: _gameTypes.map((gameType) {
+                    return DropdownMenuItem<String>(
+                      value: gameType,
+                      child: Text(gameType),
+                    );
+                  }).toList(),
+                  onChanged: (gameType) {
+                    _selectedGameType = gameType;
+                  },
+                  labelText: 'Select Game Type',
+                ),
+                const SizedBox(height: 16),
+                GamebuddyTextField(
+                  controller: _locationController,
+                  isEnabled: true,
+                  labelText: 'Location',
+                ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  height: 125,
+                  child: CupertinoDatePicker(
+                    mode: CupertinoDatePickerMode.dateAndTime,
+                    initialDateTime: _selectedDateTime,
+                    onDateTimeChanged: (DateTime newDateTime) {
+                      _selectedDateTime = newDateTime;
+                    },
+                  ),
+                ),
+                const SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: _handleAddGame,
+                  child: const Text('Add Game'),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
   void _handleAddGame() async {
