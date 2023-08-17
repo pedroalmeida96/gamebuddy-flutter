@@ -21,6 +21,11 @@ class LoginPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            Image.asset(
+              'assets/logo.png', // Replace with your image asset path
+              height: 250, // Adjust the height as needed
+            ),
+            const SizedBox(height: 16),
             const Text(
               "Login to your account",
               style: TextStyle(
