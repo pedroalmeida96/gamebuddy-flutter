@@ -14,6 +14,10 @@ class MenuPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset(
+              'assets/logo.png', // Replace with your image asset path
+              height: 250, // Adjust the height as needed
+            ),
             SizedBox(
               width: 350, // Adjust the width of the SizedBox
               height: 350, // Adjust the height of the SizedBox
