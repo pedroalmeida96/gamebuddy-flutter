@@ -5,7 +5,6 @@ import 'package:gamebuddy/widgets/gamebuddy_textfield.dart';
 
 import '../http/http.dart';
 import '../model/token_manager.dart';
-import '../widgets/gamebuddy_appbar.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -16,15 +15,21 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GamebuddyAppBar(
-        title: 'Login',
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const Text(
+              "Login to your account",
+              style: TextStyle(
+                fontSize: 24, // Adjust the font size as needed
+                fontWeight: FontWeight
+                    .bold, // You can also adjust the font weight if needed
+              ),
+            ),
+            const SizedBox(height: 16),
             GamebuddyTextField(
               controller: _emailController,
               isEnabled: true,
@@ -58,7 +63,7 @@ class LoginPage extends StatelessWidget {
                     print('Error during login: $e');
                   }
                 },
-                buttonText: 'Login',
+                buttonText: 'Sign in',
                 icon: const Icon(Icons.login)),
             const SizedBox(height: 8),
             Row(

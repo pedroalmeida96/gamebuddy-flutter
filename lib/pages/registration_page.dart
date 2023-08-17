@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gamebuddy/widgets/gamebuddy_button.dart';
 
 import '../http/http.dart';
-import '../widgets/gamebuddy_appbar.dart';
-import '../widgets/gamebuddy_textfield.dart'; // Import your game list page
+import '../widgets/gamebuddy_textfield.dart';
 
 class RegistrationPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -14,15 +13,21 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GamebuddyAppBar(
-        title: 'Registration',
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const Text(
+              "Create your account",
+              style: TextStyle(
+                fontSize: 24, // Adjust the font size as needed
+                fontWeight: FontWeight
+                    .bold, // You can also adjust the font weight if needed
+              ),
+            ),
+            const SizedBox(height: 16),
             GamebuddyTextField(
               controller: _emailController,
               isEnabled: true,
@@ -48,7 +53,7 @@ class RegistrationPage extends StatelessWidget {
                       _nameController.text, _passwordController.text);
                   Navigator.pushReplacementNamed(context, '/login');
                 },
-                buttonText: 'Register',
+                buttonText: 'Sign up',
                 icon: const Icon(Icons.account_circle)),
             const SizedBox(height: 8),
             Row(
