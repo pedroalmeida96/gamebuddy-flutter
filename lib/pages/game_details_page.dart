@@ -39,17 +39,21 @@ class GameDetailsPageState extends State<GameDetailsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Game ID:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    game.gameId.toString(),
-                    style: const TextStyle(fontSize: 16),
+                  Row(
+                    children: [
+                      const Text(
+                        'Game ID:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        game.gameId.toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                   const Text(
