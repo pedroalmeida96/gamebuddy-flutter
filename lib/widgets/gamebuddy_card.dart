@@ -115,12 +115,12 @@ class GamebuddyCard extends StatelessWidget {
             children: [
               IconButton(
                 onPressed: onEdit,
-                icon: Icon(Icons.edit),
+                icon: const Icon(Icons.edit),
                 tooltip: 'Edit',
               ),
               IconButton(
                 onPressed: onDelete,
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 tooltip: 'Delete',
               ),
             ],

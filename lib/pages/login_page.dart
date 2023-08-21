@@ -54,6 +54,7 @@ class LoginPage extends StatelessWidget {
                     final token = await performLogin(
                         _emailController.text, _passwordController.text);
                     TokenManager.authToken = token;
+                    TokenManager.loggedInUser = _emailController.text;
                     if (TokenManager.authToken != null) {
                       Fluttertoast.showToast(
                         msg: 'Auth token retrieved!',

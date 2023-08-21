@@ -21,6 +21,19 @@ Future<List<Game>> fetchGames() async {
   }
 }
 
+Future<List<Game>> fetchGamesByAuthor(String author) async {
+  final response = await http.get(
+    Uri.parse('http://10.0.2.2:8080/api/games/byAuthor?author=$author'),
+    headers: {'Authorization': 'Bearer $authToken'},
+  );
+  if (response.statusCode == 200) {
+    final List<dynamic> gamesJson = jsonDecode(response.body);
+    return gamesJson.map((json) => Game.fromJson(json)).toList();
+  } else {
+    throw Exception('Failed to fetch all games from $author');
+  }
+}
+
 Future<Game> fetchGameById(int gameId) async {
   final response = await http.get(
     Uri.parse('http://10.0.2.2:8080/api/games/' + gameId.toString()),
