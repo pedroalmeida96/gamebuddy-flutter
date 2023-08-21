@@ -61,6 +61,7 @@ class _AuthoredGameListScreenState extends State<AuthoredGameListScreen> {
                 gameType: game.gameType,
                 location: game.location,
                 gameDateTime: game.gameDateTime,
+                gameAuthor: game.author,
                 onEdit: () {
                   print("edit");
                   _handleEditGame(game.gameId!);
