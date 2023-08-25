@@ -15,7 +15,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+        body: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -53,9 +54,9 @@ class LoginPage extends StatelessWidget {
                   try {
                     final token = await performLogin(
                         _emailController.text, _passwordController.text);
-                    TokenManager.authToken = token;
-                    TokenManager.loggedInUser = _emailController.text;
-                    if (TokenManager.authToken != null) {
+                    if (token != null) {
+                      TokenManager.authToken = token;
+                      TokenManager.loggedInUser = _emailController.text;
                       Fluttertoast.showToast(
                         msg: 'Auth token retrieved!',
                         toastLength: Toast.LENGTH_SHORT,
@@ -63,8 +64,17 @@ class LoginPage extends StatelessWidget {
                         backgroundColor: Colors.green,
                         textColor: Colors.white,
                       );
+                      Navigator.pushReplacementNamed(context, '/menu');
+                    } else {
+                      _passwordController.clear(); // Clear entered password
+                      Fluttertoast.showToast(
+                        msg: 'Login failed!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        backgroundColor: Colors.green,
+                        textColor: Colors.white,
+                      );
                     }
-                    Navigator.pushReplacementNamed(context, '/menu');
                   } catch (e) {
                     print('Error during login: $e');
                   }
@@ -88,6 +98,6 @@ class LoginPage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

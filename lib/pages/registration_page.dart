@@ -13,7 +13,8 @@ class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+        body: SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -77,6 +78,6 @@ class RegistrationPage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }
