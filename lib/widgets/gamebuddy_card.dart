@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:gamebuddy/model/token_manager.dart';
 
-class FancyCard extends StatelessWidget {
+class GamebuddyCard extends StatelessWidget {
   final String title;
   final String gameType;
   final String location;
   final String gameDateTime;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final String? gameAuthor;
 
-  const FancyCard({
+  const GamebuddyCard({
     Key? key,
     required this.title,
     required this.gameType,
     required this.location,
     required this.gameDateTime,
+    this.gameAuthor,
     required this.onEdit,
     required this.onDelete,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool isAuthor = gameAuthor == TokenManager.loggedInUser;
     return Card(
       elevation: 3,
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -113,16 +117,18 @@ class FancyCard extends StatelessWidget {
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              IconButton(
-                onPressed: onEdit,
-                icon: Icon(Icons.edit),
-                tooltip: 'Edit',
-              ),
-              IconButton(
-                onPressed: onDelete,
-                icon: Icon(Icons.delete),
-                tooltip: 'Delete',
-              ),
+              if (isAuthor) // Show edit button only if isEditable is true
+                IconButton(
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit),
+                  tooltip: 'Edit',
+                ),
+              if (isAuthor) // Show delete button only if isEditable is true
+                IconButton(
+                  onPressed: onDelete,
+                  icon: const Icon(Icons.delete),
+                  tooltip: 'Delete',
+                ),
             ],
           ),
         ),

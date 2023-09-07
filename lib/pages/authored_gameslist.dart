@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
-import 'package:gamebuddy/widgets/FancyCard.dart';
-import 'package:gamebuddy/widgets/toast_utils.dart';
 
+import '../http/http.dart';
+import '../model/game.dart';
+import '../model/token_manager.dart';
+import '../widgets/gamebuddy_appbar.dart';
+import '../widgets/gamebuddy_card.dart';
+import '../widgets/toast_utils.dart';
 import 'create_game.dart';
 import 'game_details_edit.dart';
 import 'game_details_page.dart';
-import 'http/http.dart';
 
-class GameListScreen extends StatefulWidget {
-  const GameListScreen({super.key});
+class AuthoredGameListScreen extends StatefulWidget {
+  const AuthoredGameListScreen({Key? key}) : super(key: key);
 
   @override
-  _GameListScreenState createState() => _GameListScreenState();
+  _AuthoredGameListScreenState createState() => _AuthoredGameListScreenState();
 }
 
-class _GameListScreenState extends State<GameListScreen> {
+class _AuthoredGameListScreenState extends State<AuthoredGameListScreen> {
   List<Game> _games = [];
+  var loggedInUser = TokenManager.loggedInUser!;
 
   @override
   void initState() {
     super.initState();
-    fetchGames().then((games) {
+    fetchGamesByAuthor(loggedInUser).then((games) {
       setState(() {
         _games = games;
       });
@@ -34,7 +36,7 @@ class _GameListScreenState extends State<GameListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Game List',
       ),
       body: Padding(
@@ -49,22 +51,23 @@ class _GameListScreenState extends State<GameListScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => GameDetailsPage(
-                      gameId: game.gameId,
+                      gameId: game.gameId!,
                     ),
                   ),
                 );
               },
-              child: FancyCard(
+              child: GamebuddyCard(
                 title: 'Game ID: ${game.gameId}',
                 gameType: game.gameType,
                 location: game.location,
                 gameDateTime: game.gameDateTime,
+                gameAuthor: game.author,
                 onEdit: () {
                   print("edit");
-                  _handleEditGame(game.gameId);
+                  _handleEditGame(game.gameId!);
                 },
                 onDelete: () {
-                  _handleDeleteGame(game.gameId);
+                  _handleDeleteGame(game.gameId!);
                 },
               ),
             );
@@ -73,8 +76,8 @@ class _GameListScreenState extends State<GameListScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _handleAddGame,
-        child: Icon(Icons.add),
         backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
@@ -89,7 +92,7 @@ class _GameListScreenState extends State<GameListScreen> {
     );
   }
 
-  void _handleEditGame(String gameId) {
+  void _handleEditGame(int gameId) {
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -98,12 +101,11 @@ class _GameListScreenState extends State<GameListScreen> {
     );
   }
 
-  Future<void> _handleDeleteGame(String gameId) async {
+  Future<void> _handleDeleteGame(int gameId) async {
     try {
       await deleteGame(gameId);
       showSuccessToast('Game deleted successfully');
       setState(() {
-        // Remove the deleted game from the list of games
         _games.removeWhere((game) => game.gameId == gameId);
       });
     } catch (error) {

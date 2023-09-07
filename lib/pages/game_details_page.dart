@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:gamebuddy/game_details_edit.dart';
 import 'package:gamebuddy/http/http.dart';
 import 'package:gamebuddy/model/game.dart';
-import 'package:gamebuddy/widgets/FancyAppBar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_appbar.dart';
+import 'package:gamebuddy/widgets/gamebuddy_button.dart';
+
+import 'game_details_edit.dart';
 
 class GameDetailsPage extends StatefulWidget {
-  final String gameId;
+  final int gameId;
 
   const GameDetailsPage({Key? key, required this.gameId}) : super(key: key);
 
@@ -25,7 +27,7 @@ class GameDetailsPageState extends State<GameDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FancyAppBar(
+      appBar: const GamebuddyAppBar(
         title: 'Game Details',
       ),
       body: FutureBuilder<Game>(
@@ -33,22 +35,27 @@ class GameDetailsPageState extends State<GameDetailsPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final game = snapshot.data!;
-            return Padding(
+            return SingleChildScrollView(
+                child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Game ID:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    game.gameId,
-                    style: const TextStyle(fontSize: 16),
+                  Row(
+                    children: [
+                      const Text(
+                        'Game ID:',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        game.gameId.toString(),
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 16),
                   const Text(
@@ -110,30 +117,23 @@ class GameDetailsPageState extends State<GameDetailsPage> {
                         .toString(), // Adjust the formatting as needed
                     style: const TextStyle(fontSize: 16),
                   ),
-                  const SizedBox(height: 4),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16, bottom: 16),
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    GameDetailsEditPage(gameId: game.gameId),
-                              ),
-                            );
-                          },
-                          child: const Text('Edit Game Details'),
-                        ),
-                      ),
-                    ),
-                  )
+                  const SizedBox(height: 16),
+                  GamebuddyButton(
+                      buttonText: 'Edit game',
+                      icon: const Icon(Icons.edit),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GameDetailsEditPage(
+                              gameId: game.gameId!,
+                            ),
+                          ),
+                        );
+                      }),
                 ],
               ),
-            );
+            ));
           } else if (snapshot.hasError) {
             return const Center(
               child: Text(
